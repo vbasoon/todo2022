@@ -1,9 +1,10 @@
 <template>
-  <Header />
-
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <h1>{{ title }}</h1>
   <div class="wrapper">
+    <Header />
+
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <h1>{{ title }}</h1>
+
     <div class="todo-form">
       <h2>Add Todo</h2>
       <form @submit.prevent="addTask" action="">
@@ -15,17 +16,18 @@
     <div class="todo-list">
       <h2>Todo List</h2>
       <ul class="todo-list__body todo">
-        <li v-for="(task, idx) in todos" class="todo__item">
+        <li v-for="(task, idx) in todos" :key="idx" class="todo__item">
           <div>
-            <input type="checkbox" name="" id="" />
-            <span>{{ task }}</span>
+            <input class="todo__item-checkbox" type="checkbox" />
+            <span class="todo__item-info">{{ task }}</span>
           </div>
-          <div><button>Delete</button></div>
+          <div><button @click="deleteTask(idx)">Delete</button></div>
         </li>
       </ul>
     </div>
+
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 <script>
@@ -48,8 +50,8 @@ export default {
       this.todos.unshift(this.task);
       this.task = "";
     },
-    deleteTask() {
-      this.todos.splice();
+    deleteTask(idx) {
+      this.todos.splice(idx, 1);
     },
   },
 };
@@ -81,8 +83,6 @@ body {
 }
 
 body {
-  width: 100%;
-  height: 100vh;
 }
 
 .wrapper {
@@ -126,14 +126,27 @@ a {
 }
 
 .todo-list {
-  min-height: 350px;
+  height: 360px;
   padding: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
 
-  .todo {
-    &__item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 16px;
+  &__body {
+    overflow-y: scroll;
+    border: 2px solid red;
+    height: 270px;
+
+    .todo {
+      &__item {
+        display: flex;
+        padding: 10px;
+        border: 1px solid #2c3e50;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        &-checkbox {
+          margin-right: 16px;
+        }
+      }
     }
   }
 }
