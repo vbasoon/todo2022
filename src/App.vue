@@ -33,6 +33,9 @@
           <div><button @click="deleteTask(idx)">Delete</button></div>
         </li>
       </ul>
+      <div v-if="todos.length === 0">
+        <h4>You have no tasks :))</h4>
+      </div>
     </div>
 
     <Footer />
@@ -110,7 +113,7 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
 li {
