@@ -3,7 +3,7 @@
     <Header />
 
     <img alt="Vue logo" src="./assets/logo.png" />
-    <h1>{{ title }}</h1>
+    <h1>{{ headling }}</h1>
 
     <div class="todo-form">
       <h2>Add Todo</h2>
@@ -18,8 +18,17 @@
       <ul class="todo-list__body todo">
         <li v-for="(task, idx) in todos" :key="idx" class="todo__item">
           <div>
-            <input class="todo__item-checkbox" type="checkbox" />
-            <span class="todo__item-info">{{ task }}</span>
+            <input
+              v-model="task.isComplete"
+              :value="true"
+              class="todo__item-checkbox"
+              type="checkbox"
+            />
+            <span
+              class="todo__item-info"
+              :class="{ 'line-through': task.isComplete }"
+              >{{ task.nameTask }}</span
+            >
           </div>
           <div><button @click="deleteTask(idx)">Delete</button></div>
         </li>
@@ -36,7 +45,7 @@ import Footer from "./components/Footer.vue";
 export default {
   data() {
     return {
-      title: "Todo2022",
+      headling: "Todo2022",
       todos: [],
       task: "",
     };
@@ -47,7 +56,10 @@ export default {
   },
   methods: {
     addTask() {
-      this.todos.unshift(this.task);
+      this.todos.push({
+        nameTask: this.task,
+        isComplete: false,
+      });
       this.task = "";
     },
     deleteTask(idx) {
@@ -108,6 +120,10 @@ li {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.line-through {
+  text-decoration: line-through;
 }
 
 .todo-form,
