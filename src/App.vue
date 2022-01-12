@@ -6,19 +6,22 @@
   <div class="wrapper">
     <div class="todo-form">
       <h2>Add Todo</h2>
-      <form action="">
-        <input type="text" name="" id="" />
+      <form @submit.prevent="addTask" action="">
+        <input v-model="task" type="text" name="" id="" />
         <input type="submit" value="Send" />
       </form>
     </div>
-    <hr />
+
     <div class="todo-list">
       <h2>Todo List</h2>
       <ul class="todo-list__body todo">
-        <li class="todo__item">Todo1</li>
-        <li class="todo__item">Todo2</li>
-        <li class="todo__item">Todo3</li>
-        <li class="todo__item">Todo4</li>
+        <li v-for="(task, idx) in todos" class="todo__item">
+          <div>
+            <input type="checkbox" name="" id="" />
+            <span>{{ task }}</span>
+          </div>
+          <div><button>Delete</button></div>
+        </li>
       </ul>
     </div>
   </div>
@@ -32,11 +35,22 @@ export default {
   data() {
     return {
       title: "Todo2022",
+      todos: [],
+      task: "",
     };
   },
   components: {
     Header,
     Footer,
+  },
+  methods: {
+    addTask() {
+      this.todos.unshift(this.task);
+      this.task = "";
+    },
+    deleteTask() {
+      this.todos.splice();
+    },
   },
 };
 </script>
@@ -96,15 +110,29 @@ a {
   color: inherit;
 }
 
+.todo-form,
+.todo-list {
+  margin-left: 350px;
+  max-width: 720px;
+  padding: 20px;
+  background: #e5e5e5;
+  border: 5px solid #2c3e50;
+  border-radius: 30px;
+}
+
 .todo-form {
   padding: 20px;
   margin-bottom: 20px;
 }
 
 .todo-list {
+  min-height: 350px;
   padding: 20px;
+
   .todo {
     &__item {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 16px;
     }
   }
